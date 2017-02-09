@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Mashup</title>
+
+    <style>
+
+        .body{
+            position: absolute;
+            top: 10px;
+            left: 400px;
+            bottom: -40px;
+            width: auto;
+            height: auto;
+
+            background-size: cover;
+            -webkit-filter: blur(0px);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="body">
+<div id="login">
+    <div style="text-align: center;"><h1 class="welcome-message"><strong>Hello </strong>Login here</h1></div>
+    <form action="javascript:void(0);" method="get">
+        <fieldset>
+            <p><input title="Username"  id="userName" type="text" required value="Username" onBlur="if(this.value=='')this.value='Username'" onFocus="if(this.value=='Username')this.value='' "></p>
+            <p><input title="password" id="Password" type="password" required value="Password" onBlur="if(this.value=='')this.value='Password'" onFocus="if(this.value=='Password')this.value='' "></p>
+            <p><input type="submit" value="Login" onClick="checkit()"></p>
+            <h1>register here <a class="register" href="register.html">Register</a></h1>
+            <div id="status"></div>
+            <p><input onClick="login()" type="submit" value="Login with Facebook"></p>
+        </fieldset>
+    </form>
+</div>
+</body>
+
+</html>
+<script>
+    function checkit() {
+        var storedName = localStorage.getItem('userName');
+        var storedPassword = localStorage.getItem('Password');
+        var userName = document.getElementById('userName');
+        var userPassword = document.getElementById('Password');
+        if(userName.value !== storedName || userPassword.value !== storedPassword) {
+            document.getElementById("error_message").innerHTML="Invalid credentials. Please try again ";
+
+        }else {
+            self.location="home.html";
+
+        }
+    }
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '252546115199478',
+            xfbml: true,
+            version: 'v2.7'
+        });
+        FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+                document.getElementById('status').innerHTML = 'connected';
+            } else if (response.status === 'not_authorized') {
+                document.getElementById('status').innerHTML = 'not yet connected to fb';
+            } else{
+                document.getElementById('status').innerHTML = 'use fb credentials to login';
+            }
+        });
+    };
+    (function(thisdocument, scriptelement, id) {
+        var js, fjs = thisdocument.getElementsByTagName(scriptelement)[0];
+        if (thisdocument.getElementById(id)) return;
+        js = thisdocument.createElement(scriptelement); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    function  login() {
+        FB.login(function (response) {
+            if (response.status === 'connected') {
+                self.location="home1.html";
+                document.getElementById('status').innerHTML = 'connected';
+            } else if (response.status === 'not_authorized') {
+                document.getElementById('status').innerHTML = 'not yrt connected to Fb';
+            } else{
+                document.getElementById('status').innerHTML = 'use fb credentials to login';
+            }
+        });
+    }
+</script>
