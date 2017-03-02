@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ase6</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="title_activity_recipe">Recipe</string>
+    <string name="title_activity_register">Register</string>
+</resources>
